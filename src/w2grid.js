@@ -2815,9 +2815,12 @@
                     .on('paste', function (event) {
                         // clean paste to be plain text
                         var e = event.originalEvent;
-                        event.preventDefault();
-                        var text = e.clipboardData.getData("text/plain");
-                        document.execCommand("insertHTML", false, text);
+                        //Fix for IE11 - e.clipboardData is null
+                        if(e.clipboardData) {
+                            event.preventDefault();
+                            var text = e.clipboardData.getData("text/plain");
+                            document.execCommand("insertHTML", false, text);
+                        }
                     })
                     .on('keydown', function (event) {
                         var el  = this;
